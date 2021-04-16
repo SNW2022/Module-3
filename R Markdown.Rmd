@@ -28,3 +28,40 @@ plot(pressure)
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 Here is an edit
+
+m <- matrix(data=c(1,2,3,4),nrow=2,ncol=2)
+m
+
+m <- matrix(data=c(1,2,3,4,5,6),nrow=2,ncol=3,byrow=FALSE)
+m
+
+m <- matrix(data=c(1,2,3,4,5,6),nrow=2,ncol=3,byrow=TRUE)
+m
+
+v1 <- c(1,2,3,4)
+v2 <- c(6,7,8,9)
+m1 <- rbind(v1,v2)
+m1
+
+m2 <- cbind(v1,v2)
+m2
+
+class(m1)
+
+dim(m1)
+
+class(m2)
+
+dim(m2)
+
+colnames(m2)
+
+rownames(m2)
+
+str(m2)
+
+a <- array(data=1:90, dim=c(5,6,3))
+a
+
+
+
