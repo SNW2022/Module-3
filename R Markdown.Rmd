@@ -69,9 +69,12 @@ v
 v[1:15]
 
 v[c(2,4,6,8,10)]
-
-v <- 101:200
-v[seq(from = 1, to = 100, by = 2)]
-
 y <- c("Stately", "plump", "Buck", "Mulligan", "came", "from", "the", "stairhead", "bearing", "a", "bowl", "of", "lather", "on", "which", "a", "mirror", "and", "a", "razor", "lay", "crossed")
 y
+
+x <- c("Stately", "plump", "Buck", "Mulligan", "came", "from", "the", "stairhead", "bearing", "a", "bowl", "of", "lather", "on", "which", "a", "mirror", "and", "a", "razor", "lay", "crossed")
+x
+n <- x[seq(1, length(x), 3)]
+print(n)
+
+
