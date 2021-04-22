@@ -118,3 +118,27 @@ m[2:5,4:8] <- matrix(data = c(20:1), nrow=4,ncol=5,byrow=TRUE)
 m
 m[,8] <- c("a","b")
 m
+
+Catarrhini<-list ("Cercopithecidae", "Hylobatide", "Hominidae")
+names(Catarrhini)<-c("Cercopithecidae", "Hylobatide", "Hominidae")
+Platyrrhini<-list("Cebidae", "Atelidae", "Pitheciidae")
+names(Platyrrhini)<-c("Cebidae", "Atelidae", "Pitheciidae")
+Anthropoidea<-list(Platyrrhini, Catarrhini)
+names(Anthropoidea)<-c("Platyrrhini","Catarrhini")
+Anthropoidea
+Tarsioidea<-list("Tariisdae")
+names(Tarsioidea)<-c("Tariisdae")
+Tarsioidea
+Haplorhini<-list(Anthropoidea, Tarsioidea)
+names(Haplorhini)<-c("Anthropoidea", "Tarsioidea")
+Haplorhini
+Lemuroidea<-list("Cheirogaleidae","Lepilemuridae","Indriidae","Lemuridae","Daubentoniidae")
+names(Lemuroidea)<-c("Cheirogaleidae","Lepilemuridae","Indriidae","Lemuridae","Daubentoniidae")
+Lorisoidea<-list("Lorisidae","Galagidae")
+names(Lorisoidea)<-c("Lorisidae","Galagidae")
+Strepsirhini<-list(Lemuroidea,Lorisoidea)
+names(Strepsirhini)<-c("Lemuroidea","Lorisoidea")
+Strepsirhini
+Primates<-list(Haplorhini, Strepsirhini)
+names(Primates)<-c("Haplorhini", "Strepsirhini")
+Primates
