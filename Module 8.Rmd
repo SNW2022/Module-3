@@ -1,0 +1,106 @@
+---
+title: "Module 8"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+suits <- c("Diamonds","Hearts","Spades","Clubs")
+numbers<-c("Ace","Two","Three","Four","Five","Six","Seven","Eight"
+,"Nine","Ten","Jack","Queen","King")
+deck <- expand.grid(number = numbers, suit = suits)
+deck<-paste(deck$number, deck$suit)
+ace<- paste("Ace", suits)
+ace
+faceCard <- c("Jack","Queen", "King")
+faceCard <- expand.grid(faceCard = faceCard, suits = suits)
+faceCard
+faceCard <- paste(faceCard$faceCard, faceCard$suits)
+faceCard
+mean(deck %in% faceCard)
+kings <- paste("King", suits)
+mean(deck %in% kings)
+##won't work##
+spades <- paste("Spades", numbers)
+mean(deck %in% spades)
+p1 <-(12/52)
+p1
+p2 <-(13/52)p1 <-(4/52)
+p1
+p2 <-(13/52)
+p2
+p1 * p2
+
+p2
+p1 * p2
+
+n <- 6 # number of trials
+k <- 6 # number of successes
+p <- 1/6
+prob <- (factorial(n)/(factorial(k)*factorial(n-k)))*(p^k)*(1-p)^(n-k)
+prob
+k <- 3 # number of successes
+prob <- (factorial(n)/(factorial(k)*factorial(n-k)))*(p^k)*(1-p)^(n-k)
+prob
+
+a <- 4
+b <- 8
+x <- seq(from=a-(b-a), to=b+(b-a), by=0.01)
+fx <- dunif(x,min=a, max=b) # dunif() evaluates the density at each x
+plot(x,fx,type="l",xlab="x",ylab="f(x)",main="Probability Density Function")
+plot(x,punif(q=x,min=a,max=b),type="l",xlab="x",ylab="Pr(X ≤ x)",main="Cumulative Probability")
+
+a <- 6
+b <- 8
+x <- seq(from=a-(b-a), to=b+(b-a), by=0.01)
+fx <- dunif(x,min=a, max=b) # dunif() evaluates the density at each x
+plot(x,fx,type="l",xlab="x",ylab="f(x)",main="Probability Density Function")
+
+mu <- 4
+sigma <- 1.5
+curve(dnorm(x,mu,sigma), mu - 4*sigma, mu + 4*sigma, main="Normal Curve", xlab="x", ylab="f(x)")
+manipulate(
+plot(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000),
+dnorm(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000),mean=mu,sd=sigma),
+type="l",xlim=c(mu - 4*sigma, mu + 4*sigma), xlab="x",ylab="f(x)",
+main="Normal Probability Density Function") +
+polygon(rbind(c(mu - nsigma*sigma,0),cbind(seq(from=(mu - nsigma*sigma),to=(mu + nsigma*sigma),length.out=1000),dnorm(seq(from=(mu - nsigma*sigma), to=(mu + nsigma*sigma), length.out = 1000),mean=mu,sd=sigma)),c(mu + nsigma*sigma,0)),border=NA,col="salmon") +
+abline(v=mu, col = "blue") + abline(h=0) + abline(v=c(mu - nsigma*sigma, mu + nsigma * sigma),col="salmon"),
+mu=slider(-10, 10, initial=0, step=0.25),
+sigma=slider(0.25, 4, initial=1, step=0.25),
+nsigma=slider(0,4,initial=0,step=0.25)
+)
+
+n <- 1000
+mu <- 3.5
+sigma <- 4
+v <- rnorm(n,mu,sigma)
+mean(v)
+var(v)
+sd(v)
+hist(v,breaks=seq(from=-15, to=20, by=0.5), probability = TRUE)
+x <- rnorm(10000, mean=5, sd = 8)
+hist(x)
+mean(x)
