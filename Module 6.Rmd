@@ -53,3 +53,16 @@ new <- d[grep("^[A-F]", d$country),]
 summary(new)
 mean(new$population, na.rm = TRUE)
 mean(new$area, na.rm = TRUE)
+
+boxplot(d$population)
+boxplot(d$area)
+
+boxplot(log(d$population))
+boxplot(log(d$area))
+
+hist(log(population), freq=FALSE, col = "red", main = "Plot 1", xlab = "log(population size)", ylab = "density", ylim = c(0,0.2))
+hist(log(population), freq=TRUE, col = "red", main = "Plot 1", xlab = "log(population size)", ylab = "density", ylim = c(0,0.2))
+hist(log(area), freq=FALSE, col = "red", main = "Plot 2", xlab = "log(area)", ylab = "density", ylim = c(0,0.2))
+hist(log(area), freq=TRUE, col = "red", main = "Plot 2", xlab = "log(area)", ylab = "density", ylim = c(0,0.2))
+
+sort(table(d$govt_form),decreasing=TRUE)
