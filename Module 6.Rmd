@@ -39,3 +39,17 @@ median(x, na.rm = TRUE)
 x <-d$area
 x
 median(x, na.rm = TRUE)
+
+d <- d[order(d$density),]
+d[1:10,]
+x <- d$population
+x
+median(x,na.rm = TRUE)
+x <- d$area
+x
+median(x,na.rm = TRUE)
+
+new <- d[grep("^[A-F]", d$country),]
+summary(new)
+mean(new$population, na.rm = TRUE)
+mean(new$area, na.rm = TRUE)
