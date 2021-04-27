@@ -1,0 +1,84 @@
+---
+title: "Module 11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+library(ggplot2)
+alpha <- 0.05
+psig <- NULL
+pvals <- c(1e-04, 0.003, 0.005, 0.01, 0.02, 0.04, 0.045, 0.11, 0.18, 0.27)
+for (i in 1:length(pvals)) {
+psig[i] <- alpha * i/length(pvals)
+}
+d <- data.frame(cbind(rank = c(1:10), pvals, psig))
+p <- ggplot(data = d, aes(x = rank, y = pvals)) + geom_point() + geom_line(aes(x = rank,
+y = psig))
+p
+sig <- pvals <= psig
+sig
+sig <- p.adjust(pvals, method = "bonferroni") <= 0.05
+sig
+sig <- p.adjust(pvals, method = "BH") <= 0.05
+sig
+
+eII <- typeII(mu0 = 5, muA = 7, sigma = 2, n = 15, alternative = "two.tailed")
+
+library(ggplot2)
+library(manipulate)
+power.test <- function(mu0, muA, sigma, alpha = 0.05, type, alternative) {
+    p <- 0
+    for (i in 2:200) {
+        x <- power.t.test(n = i, delta = abs(muA - mu0), sd = sigma, sig.level = alpha, 
+            power = NULL, type = type, alternative = alternative)
+        p <- c(p, x$power)
+    }
+    d <- data.frame(cbind(1:200, p, 1 - p))
+    critn <- 0
+    for (i in 1:199) {
+        if (p[i] < 0.8 && p[i + 1] >= 0.8) {
+            critn <- i + 1
+        } else {
+            critn <- critn
+        }
+    }
+    names(d) <- c("n", "power", "beta")
+    g <- ggplot(data = d) + xlab("sample size n") + ylab("Type II Error Rate, Beta  (Red)\nand\nPower, 1-Beta (Blue)") + 
+        ggtitle("Power for T Tests\n(assuming equal n and variance across the two groups)") + 
+        ylim(0, 1) + geom_point(aes(x = n, y = power), colour = "blue", alpha = 1/2) + 
+        geom_line(aes(x = n, y = power), colour = "blue", alpha = 1/2) + geom_line(aes(x = n, 
+        y = 0.8), colour = "red", lty = 3) + geom_point(aes(x = n, y = beta), 
+        colour = "red", alpha = 1/2) + geom_line(aes(x = n, y = beta), colour = "red", 
+        alpha = 1/2) + geom_linerange(aes(x = critn, ymin = 0, ymax = 0.8), 
+        colour = "blue", alpha = 1/4) + annotate("text", x = 150, y = 0.5, label = paste("Effect Size = ", 
+        round(abs(mu0 - muA)/sigma, digits = 3), "\nCritical n = ", critn, sep = ""))
+    print(g)
+}
+manipulate(power.test(mu0, muA, sigma, alpha, type, alternative), mu0 = slider(-10, 
+    10, initial = 3, step = 1), muA = slider(-10, 10, initial = 0, step = 1), 
+    sigma = slider(1, 10, initial = 3, step = 1), alpha = slider(0.01, 0.1, 
+        initial = 0.05, step = 0.01), alternative = picker("two.sided", "one.sided"), 
+    type = picker("two.sample", "one.sample", "paired"))
