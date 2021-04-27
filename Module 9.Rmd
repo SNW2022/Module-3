@@ -1,0 +1,46 @@
+---
+title: "Module 9"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+n <- 1000
+x <- 856
+phat <- x/n
+phat
+n * phat
+n * (1 - phat)
+pop_se <- sqrt((phat) * (1 - phat)/n)
+curve(dnorm(x, mean = phat, sd = pop_se), phat - 4 * pop_se, phat + 4 * pop_se)
+upper <- phat + qnorm(0.975) * pop_se
+lower <- phat - qnorm(0.975) * pop_se
+ci <- c(lower, upper)
+polygon(cbind(c(ci[1], seq(from = ci[1], to = ci[2], length.out = 1000), ci[2]),
+c(0, dnorm(seq(from = ci[1], to = ci[2], length.out = 1000), mean = phat,
+sd = pop_se), 0)), border = "black", col = "gray")
+abline(v = ci)
+abline(h = 0)
+mean(phat)
