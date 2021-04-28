@@ -76,3 +76,56 @@ sort(table(d$govt_form),decreasing=TRUE)
 ##republic is the most common form of government##
 
 ##Challenge 5##
+library(curl)
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN597_Fall19/KamilarAndCooperData.csv")
+d <- read.csv(f, header = TRUE, stringsAsFactors = FALSE)
+attach(d)
+head(d)
+boxplot(log(Body_mass_female_mean)~Family,d)
+detach(d)
+library(ggplot2)
+p <- ggplot(data=d, aes(x=Family, y=log(Body_mass_female_mean)))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x=element_text(angle=90))
+p <- p + ylab("log(Female Body Mass)")
+p
+
+##Challenge 6##
+attach(d)
+par(mfrow=c(1,2))
+plot(x = Body_mass_female_mean, y = Brain_Size_Female_Mean)
+plot(x = log(Body_mass_female_mean), y = log(Brain_Size_Female_Mean))
+detach(d)
+
+p <- ggplot(data=d, aes(x=log(Body_mass_female_mean),
+y=log(Brain_Size_Female_Mean),
+color = factor(Family)
+))
+p <- p + xlab("log(Female Body Mass)") + ylab("log(Female Brain Size)")
+p <- p + geom_point()
+p <- p + theme(legend.position="bottom", legend.title=element_blank())
+p
+p <- p + facet_wrap(~ Family, ncol=4)
+p <- p + theme(legend.position="none")
+p
+p <- p + geom_smooth(method="lm", fullrange=TRUE)
+p
+
+##Challenge 7##
+p <- ggplot(data=d, aes(x=log(Body_mass_female_mean),
+y=log(MeanGroupSize)
+))
+p <- p + geom_point()
+p <- p + geom_smooth(method="lm")
+p
+
+##Challenge 8##
+library(dplyr)
+s <- d %>%
+mutate(Binomial = paste(Genus, Species, sep=" ")) %>%
+select(Binomial, Family, Body_mass_female_mean, Body_mass_male_mean, Mass_Dimorphism) %>%
+group_by(Family) %>%
+summarise(avgF = mean(Body_mass_female_mean, na.rm=TRUE),
+avgM = mean(Body_mass_male_mean, na.rm=TRUE),
+avgBMD = mean(Mass_Dimorphism, na.rm=TRUE))
+s
