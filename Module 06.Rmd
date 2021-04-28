@@ -1,0 +1,78 @@
+---
+title: "Module 0"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+##Challenge 1##
+library(curl)
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN597_Fall19/Country-Data-2016.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+summary(d)
+names(d)
+x <-d$population
+x
+median(x, na.rm = TRUE)
+x <-d$area
+x
+median(x, na.rm = TRUE)
+
+d$density <- d$population/d$area
+d <- d[order(-d$density),]
+d[1:10,]
+
+d <- d[order(d$density),]
+d[1:10,]
+
+d <- d[order(-d$population),]
+d[1:20]
+
+new <- d[grep("^[A-F]", d$country),]
+summary(new)
+mean(new$population, na.rm = TRUE)
+mean(new$area, na.rm = TRUE)
+
+##Challenge 2##
+par(mfrow = c(2, 3))
+boxplot(d$population)
+boxplot(log(d$population))
+boxplot(d$area)
+boxplot(log(d$area))
+barplot(d$population)
+barplot(d$area)
+
+##Challenge 3##
+par(mfrow=c(1,2))
+attach(d)
+hist(log(population), freq=FALSE, col = "red", main = "Plot 1", xlab = "log(population size)", ylab = "density", ylim = c(0,0.2))
+hist(log(area), freq=FALSE, col = "red", main = "Plot 2", xlab = "log(area)", ylab = "density", ylim = c(0,0.2))
+
+##Challenge 4##
+sort(table(d$govt_form),decreasing=TRUE)
+##republic is the most common form of government##
+
+##Challenge 5##
