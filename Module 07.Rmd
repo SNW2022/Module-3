@@ -1,0 +1,114 @@
+---
+title: "Module 07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+##Challenge 1##
+x <- c(1,2,3,4,5,6,7,8,9,10,25,50,100,200,1000)
+gm1 <- function(x){prod(x)^(1/length(x))}
+gm1(x)
+
+gm2 <- function(x){exp(mean(log(x)))}
+gm2(x)
+
+gm1 <- function(x, na.rm = TRUE){prod(x)^(1/length(x))}
+gm1(x)
+
+##Challenge 2##
+x <- c(1,2,3,4,5,6,7,8,9,10,25,50,100,200,1000)
+x
+ss1 <- function(x){sum((x-mean(x))^2)}
+ss1(x)
+ss2 <- function(x){sum(x^2) - length(x)*mean(x)^2}
+ss2(x)
+ss3 <- function(x){sum(x^2) - (sum(x))^2/length(x)}
+ss3(x)
+
+pop_v <- function(x){sum((x-mean(x))^2)/(length(x))}
+pop_v(x)
+
+##Challenge 3##
+sample_v <- function (x){sum((x-mean(x))^2)/(length(x)-1)}
+sample_v(x)
+
+par("mar")
+par(mar=c(1,1,1,1))
+par("mar")
+
+plot(c(0, 50), c(0, 15), type="n", xlab= "Sample size", ylab="Variance")
+for (n in seq(5,50,5))
+{
+for(i in 1:50){
+x<- rnorm(n, mean=10 ,sd=2)
+points(n,var(x))
+}
+}
+pop_sd <- function(x){sqrt(pop_v(x))}
+pop_sd(x)
+sample_sd <- function(x){sqrt(sample_v(x))}
+sample_sd(x)
+
+##Challenge 4##
+SE2 <- function(x){sqrt(var(x)/length(x))}
+SE2(x)
+
+library(sciplot)
+se(x)
+
+set.seed(1)
+x <- rnorm(10000,0,1)
+hist(x)
+x<-seq(from = -4, to = 4, by = 0.01)
+plot(x,dnorm(x), cex=0.4)
+plot(x,pnorm(x), cex=0.4)
+x<-seq(from = 0, to = 1, by = 0.01)
+plot(qnorm(x),x,cex=0.4)
+
+x <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
+quantile(set, c(0.025, 0.975))
+
+##Challenge 5## 
+n <- 5
+for (i in 1:10000){
+set[i] <- mean(sample(x, n, replace=TRUE))
+}
+quantile(set)
+quantile(set, c(0.025, 0.975))
+
+n <- 50
+for (i in 1:10000){
+set[i] <- mean(sample(x, n, replace=TRUE))
+}
+quantile(set)
+quantile(set, c(0.025, 0.975))
+
+n <- 500
+for (i in 1:10000){
+set[i] <- mean(sample(x, n, replace=TRUE))
+}
+quantile(set)
+quantile(set, c(0.025, 0.975))
