@@ -1,0 +1,66 @@
+---
+title: "Module 08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+##Homework 1##
+1 - pnbinom(q=8,size=15,prob=7/15)
+
+1 - pnbinom(q=0,size=15,prob=1/16)
+
+dbinom(x=3,size=15,prob=1/15)
+
+x <- 0:30
+l = 15
+probset<-dpois(x=x,lambda=l)
+barplot(probset,names.arg=x,space=0,xlab="x",ylab="Pr(X = x)",main="Probability of Titi Monkey Calls")
+
+ncalls <- 104
+call <- function(x) {sample(1:15, x, replace = TRUE)}
+hist(two_dice,breaks=c(1.5:12.5), probability = TRUE, main="Titi Monkey Calls", xlab = "number of calls", ylab = "probability")
+hist(two_dice,breaks=c(1.5:12.5), probability = TRUE, main="Titi Monkey Calls", xlab = "number of calls", xlim = c(0,30), ylab = "probability")
+
+##Homework 2##
+library(curl)
+f <- f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN597_Fall19/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+t.test(d$height)$conf.int
+t.test(d$weight)$conf.int
+t.test(d$age)$conf.int
+t.test(d$zombies_killed)$conf.int
+t.test(d$years_of_education)$conf.int
+
+boxplot(d$height~d$gender, ylab = "height", main="Height and Gender", xlab = "gender")
+boxplot(d$weight~d$gender, ylab = "height", main="Weight and Gender", xlab = "gender")
+boxplot(d$age~d$gender, ylab = "height", main="Age and Gender", xlab = "gender")
+boxplot(d$zombies_killed~d$gender, ylab = "height", main="Zombies Killed and Gender", xlab = "gender")
+boxplot(d$years_of_education~d$gender, ylab = "height", main="Years of Education and Gender", xlab = "gender")
+
+plot(x = log(age), y = log(height))
+plot(x = log(weight), y = log(height))
+
