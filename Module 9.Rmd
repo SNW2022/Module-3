@@ -1,5 +1,5 @@
 ---
-title: "Module 9"
+title: "Module 09"
 output: html_document
 ---
 
@@ -27,13 +27,18 @@ plot(pressure)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
+##Challenge##
 n <- 1000
 x <- 856
 phat <- x/n
 phat
+
 n * phat
+
 n * (1 - phat)
+
 pop_se <- sqrt((phat) * (1 - phat)/n)
+
 curve(dnorm(x, mean = phat, sd = pop_se), phat - 4 * pop_se, phat + 4 * pop_se)
 upper <- phat + qnorm(0.975) * pop_se
 lower <- phat - qnorm(0.975) * pop_se
@@ -43,4 +48,5 @@ c(0, dnorm(seq(from = ci[1], to = ci[2], length.out = 1000), mean = phat,
 sd = pop_se), 0)), border = "black", col = "gray")
 abline(v = ci)
 abline(h = 0)
+
 mean(phat)
