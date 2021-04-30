@@ -50,3 +50,51 @@ barplot(log(d$external.temperature))
 hist(log(d$external.temp), freq=FALSE, col = "white", main = "My Plot with External Temp", xlab = "log(external.temp)", ylab = "location.lat", ylim = c(0,20))
 
 hist(log(d$external.temp), freq=FALSE, col = "white", main = "My Plot with External Temp", xlab = "log(external.temp)", ylab = "location.lat", ylim = c(0,0.2))
+
+x <- d$external.temperature
+mean(x)
+s <- sd(x)
+n <-length(x)
+sem <- s/sqrt(n)
+par(mfrow = c(1, 2))
+boxplot(d$external.temperature, ylim = c(0, 30), main = "External Temp", xlab = "External Temp")
+t <- (m - mu)/sem
+t
+alpha <- 0.05
+crit <- qt(1 - alpha/2, df = n - 1)
+crit
+test <- t < -crit || t > crit
+test
+t.test(x, df = n - 1, alternative = "two.sided")
+
+x <- d$location.lat
+mean(x)
+s <- sd(x)
+n <-length(x)
+sem <- s/sqrt(n)
+par(mfrow = c(1, 2))
+boxplot(d$external.temperature, ylim = c(0, 30), main = "External Temp", xlab = "External Temp")
+t <- (m - mu)/sem
+t
+alpha <- 0.05
+crit <- qt(1 - alpha/2, df = n - 1)
+crit
+test <- t < -crit || t > crit
+test
+t.test(x, df = n - 1, alternative = "two.sided")
+
+x <- d$location.long
+mean(x)
+s <- sd(x)
+n <-length(x)
+sem <- s/sqrt(n)
+par(mfrow = c(1, 2))
+boxplot(d$external.temperature, ylim = c(0, 30), main = "External Temp", xlab = "External Temp")
+t <- (m - mu)/sem
+t
+alpha <- 0.05
+crit <- qt(1 - alpha/2, df = n - 1)
+crit
+test <- t < -crit || t > crit
+test
+t.test(x, df = n - 1, alternative = "two.sided")
