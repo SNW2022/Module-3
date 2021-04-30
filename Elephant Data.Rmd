@@ -32,14 +32,21 @@ f
 par("mar")
 boxplot(d$external.temperature)
 d <- read.table(f, header = TRUE, sep =",", stringsAsFactors = FALSE)
-head(d)
+
 head(d)
 d <- d[order(-d$external.temperature),]
 d[1:10]
+
 mean(d$external.temperature)
+
 boxplot(d$external.temperature)
+
 boxplot(log(d$external.temperature))
+
 barplot(d$external.temperature)
+
 barplot(log(d$external.temperature))
+
 hist(log(d$external.temp), freq=FALSE, col = "white", main = "My Plot with External Temp", xlab = "log(external.temp)", ylab = "location.lat", ylim = c(0,20))
+
 hist(log(d$external.temp), freq=FALSE, col = "white", main = "My Plot with External Temp", xlab = "log(external.temp)", ylab = "location.lat", ylim = c(0,0.2))
