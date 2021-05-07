@@ -1,0 +1,123 @@
+---
+title: "Other Data Sets"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+Module 12 with mtcars
+
+data("mtcars")
+x <- mtcars
+x
+head(x)
+
+names(x)
+
+plot(data = x, mpg~gear)
+plot(data = x, qsec~mpg)
+plot(data = x, wt~disp)
+
+C <- cov(x)
+C[1:3,1:6]
+
+C[1,1]
+
+library(curl)
+library(ggplot2)
+f <- curl("https://gist.githubusercontent.com/seankross/a412dfbd88b3db70b74b/raw/5f23f993cd87c283ce766e7ac6b329ee7cc2e1d1/mtcars.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+m <- d$mpg
+q <- d$qsec
+n <- length(q)
+cov_mq <- sum((m - mean(m)) * (q - mean(q)))/(n - 1)
+cov_mq
+cov(m, q)
+
+beta1 <- cor(d$mpg, d$gear) * sd(d$mpg)/sd(d$gear)
+beta1
+beta0 <- mean(d$mpg) - beta1 * mean(d$gear)
+beta0
+m <- lm(mpg ~ gear, data = d)
+m
+
+t <- coef(summary(m))
+t <- data.frame(unlist(t))
+colnames(t) <- c("Est", "SE", "t", "p")
+t
+t$lower <- t$Est - qt(0.975, df = 998) * t$SE
+t$upper <- t$Est + qt(0.975, df = 998) * t$SE
+ci <- c(t$lower, t$upper)
+ci
+ci <- confint(m, level = 0.95)
+ci
+
+m <- lm(data = d, mpg ~ gear)
+h_hat <- predict(m, newdata = data.frame(gear = d$gear))
+df <- data.frame(cbind(d$gear, d$mpg, h_hat))
+names(df) <- c("x", "y", "yhat")
+head(df)
+g <- ggplot(data = df, aes(x = x, y = yhat))
+g <- g + geom_point()
+g <- g + geom_point(aes(x = x, y = y), colour = "red")
+g <- g + geom_segment(aes(x = x, y = yhat, xend = x, yend = y))
+g
+
+Module 13 with iris
+library(curl)
+f <- curl("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+names(d)
+m <- lm(data = d, sepal.length ~ sepal.width)
+SSY <- sum((m$model$sepal.length - mean(m$model$sepal.length))^2)
+SSY
+SSR <- sum((m$petal.width - mean(m$model$sepal.width))^2)
+SSR
+SSR <- sum((m$petal.length - mean(m$model$sepal.width))^2)
+SSr
+SSR
+SSE <- sum((m$model$sepal.width - m$petal.length)^2)
+SSE
+
+curve(df(x, df = 1, df2 = 1), col = "green", lty = 3, lwd = 2, xlim = c(0, 10),
+main = "Iris F Distributions",
+ylab = "f(x)", xlab = "x")
+curve(df(x, df = 2, df2 = 2), col = "blue", lty = 3, lwd = 2, add = TRUE)
+curve(df(x, df = 4, df2 = 4), col = "red", lty = 3, lwd = 2, add = TRUE)
+curve(df(x, df = 8, df2 = 6), col = "purple", lty = 3, lwd = 2, add = TRUE)
+curve(df(x, df = 1, df2 = 998), col = "black", lwd = 3, add = TRUE)
+legend("top", c("df1=1,df2=1", "df1=2,df2=2", "df1=4,df2=4", "df1=8,df2=6",
+"df1=1,df2=998"), lty = 3, lwd = 2, col = c("green", "blue", "red", "purple",
+"black"), bty = "n", cex = 0.75)
+fcrit <- qf(p = 0.95, df1 = 1, df2 = 998)
+fcrit
+
+abline(v = fcrit)
+abline(h = 0)
+polygon(cbind(c(fcrit, seq(from = fcrit, to = 10, length.out = 1000), 8), c(0, 
+    df(seq(from = fcrit, to = 8, length.out = 1000), df1 = 1, df2 = 998), 0)), 
+    border = "black", col = "grey")
+
